@@ -1,0 +1,22 @@
+app = '$FLY_APP_NAME'
+
+[mounts]
+  source='influxdb_data'
+  destination='/var/lib/influxdb2' # InfluxDB data directory
+
+[[services]]
+  internal_port = 8086
+  protocol = 'tcp'
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = 'connections'
+
+  [[services.ports]]
+    force_https = true
+    handlers = ['http']
+    port = 80
+
+  [[services.ports]]
+    handlers = ['tls', 'http']
+    port = 443
